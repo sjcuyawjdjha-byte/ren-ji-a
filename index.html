@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>视频背景音乐切换器</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- 视频区域 -->
+    <main class="video-area">
+      <h1 class="title">视频背景音乐切换器</h1>
+      <div class="video-wrapper">
+        <video id="video" controls>
+          <source src="video/sample-video.mp4" type="video/mp4">
+          您的浏览器不支持视频播放，请更换浏览器。
+        </video>
+      </div>
+      <p class="hint">请将 video/sample-video.mp4 替换为您自己的视频文件路径</p>
+    </main>
+
+    <!-- 音乐侧边栏 -->
+    <aside class="sidebar">
+      <h2 class="sidebar-title">背景音乐</h2>
+
+      <!-- 音量控制 -->
+      <div class="volume-controls">
+        <button id="mute-btn" class="mute-btn" title="静音/取消静音">🔊</button>
+        <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.01" value="0.5">
+        <span id="volume-value" class="volume-value">50%</span>
+      </div>
+
+      <!-- 音乐列表 -->
+      <ul id="music-list" class="music-list"></ul>
+
+      <p class="sidebar-hint">编辑 app.js 中的 musicList 数组来添加您自己的音乐</p>
+    </aside>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

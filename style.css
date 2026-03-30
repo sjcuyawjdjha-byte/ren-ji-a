@@ -1,0 +1,210 @@
+/* ========== 全局样式 ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #0d0d0d;
+  color: #e0e0e0;
+  min-height: 100vh;
+}
+
+/* ========== 主布局 ========== */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ========== 视频区域 ========== */
+.video-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.video-wrapper {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.video-wrapper video {
+  width: 100%;
+  display: block;
+  background: #000;
+}
+
+.hint {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* ========== 侧边栏 ========== */
+.sidebar {
+  width: 300px;
+  background: #1a1a1a;
+  border-left: 1px solid #2a2a2a;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* ========== 音量控制 ========== */
+.volume-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 12px;
+  background: #222;
+  border-radius: 8px;
+}
+
+.mute-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: transform 0.15s;
+}
+
+.mute-btn:hover {
+  transform: scale(1.15);
+}
+
+.volume-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #4f9eff;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #4f9eff;
+  border: none;
+  cursor: pointer;
+}
+
+.volume-value {
+  font-size: 0.85rem;
+  color: #999;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ========== 音乐列表 ========== */
+.music-list {
+  list-style: none;
+  flex: 1;
+}
+
+.music-list li {
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  border-left: 3px solid transparent;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.music-list li:hover {
+  background: #2a2a2a;
+}
+
+.music-list li.active {
+  background: #1e2a3a;
+  border-left-color: #4f9eff;
+  color: #4f9eff;
+}
+
+.music-list li .track-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.music-list li .track-name {
+  flex: 1;
+}
+
+.sidebar-hint {
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: #555;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ========== 响应式 ========== */
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #2a2a2a;
+    max-height: 50vh;
+  }
+
+  .video-area {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+}

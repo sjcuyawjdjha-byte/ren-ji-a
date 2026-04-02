@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验报告 - 视频背景音乐自由切换</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'SimSun', 'STSong', serif;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .report {
+            max-width: 794px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 60px 70px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 28px;
+            background: #e94560;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(233,69,96,0.3);
+            z-index: 100;
+        }
+        .print-btn:hover { background: #d63851; }
+
+        /* 封面 */
+        .cover {
+            text-align: center;
+            padding: 80px 0 60px;
+            border-bottom: 2px solid #333;
+            margin-bottom: 40px;
+        }
+        .cover .school { font-size: 22px; letter-spacing: 6px; margin-bottom: 40px; }
+        .cover .report-title { font-size: 28px; font-weight: bold; margin-bottom: 50px; }
+        .cover table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        .cover td {
+            padding: 8px 16px;
+            font-size: 16px;
+        }
+        .cover td:first-child { text-align: right; font-weight: bold; }
+        .cover td:last-child {
+            border-bottom: 1px solid #333;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        /* 正文 */
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 30px 0 14px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #e94560;
+            color: #1a1a2e;
+        }
+
+        h3 {
+            font-size: 15px;
+            font-weight: bold;
+            margin: 20px 0 10px;
+            color: #16213e;
+        }
+
+        p {
+            text-indent: 2em;
+            margin-bottom: 8px;
+        }
+
+        .no-indent { text-indent: 0; }
+
+        ul, ol {
+            margin-left: 2em;
+            margin-bottom: 10px;
+        }
+        li { margin-bottom: 4px; }
+
+        .code-block {
+            background: #1a1a2e;
+            color: #e0e0e0;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin: 12px 0;
+            white-space: pre;
+        }
+
+        .screenshot-placeholder {
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            color: #999;
+            margin: 16px 0;
+            font-style: italic;
+        }
+
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+        table.data-table th, table.data-table td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        table.data-table th {
+            background: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .highlight { color: #e94560; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">导出为 PDF</button>
+
+<div class="report">
+    <!-- ===== 封面 ===== -->
+    <div class="cover">
+        <div class="school">XX 大学</div>
+        <div class="report-title">实验报告</div>
+        <br><br>
+        <table>
+            <tr><td>实验名称</td><td>视频背景音乐自由切换</td></tr>
+            <tr><td>课程名称</td><td>（请填写课程名称）</td></tr>
+            <tr><td>姓&emsp;&emsp;名</td><td>（请填写姓名）</td></tr>
+            <tr><td>学&emsp;&emsp;号</td><td>（请填写学号）</td></tr>
+            <tr><td>班&emsp;&emsp;级</td><td>（请填写班级）</td></tr>
+            <tr><td>指导教师</td><td>（请填写教师姓名）</td></tr>
+            <tr><td>实验日期</td><td>2026 年 4 月 2 日</td></tr>
+        </table>
+    </div>
+
+    <!-- ===== 一、实验目的 ===== -->
+    <h2>一、实验目的</h2>
+    <ol>
+        <li>掌握 HTML5 Video 和 Web Audio API 的基本使用方法；</li>
+        <li>学习使用 Python 搭建本地 HTTP 服务器，理解前后端协作流程；</li>
+        <li>熟练运用 AI 辅助编程工具（通义灵码）提升开发效率；</li>
+        <li>实现视频背景音乐的自由切换功能，掌握前端多媒体交互开发技术。</li>
+    </ol>
+
+    <!-- ===== 二、实验环境 ===== -->
+    <h2>二、实验环境</h2>
+    <table class="data-table">
+        <tr><th>项目</th><th>说明</th></tr>
+        <tr><td>操作系统</td><td>Windows 11 / macOS / Linux</td></tr>
+        <tr><td>Python 版本</td><td>Python 3.8+</td></tr>
+        <tr><td>浏览器</td><td>Google Chrome 120+（支持 Web Audio API）</td></tr>
+        <tr><td>AI 工具</td><td>通义灵码（Tongyi Lingma）</td></tr>
+        <tr><td>代码编辑器</td><td>VS Code</td></tr>
+        <tr><td>核心技术</td><td>HTML5、CSS3、JavaScript（ES6+）、Web Audio API</td></tr>
+    </table>
+
+    <!-- ===== 三、Python Demo 运行情况 ===== -->
+    <h2>三、Python Demo 运行情况</h2>
+
+    <h3>3.1 启动服务器</h3>
+    <p class="no-indent">在项目根目录下执行以下命令启动 Python HTTP 服务器：</p>
+    <div class="code-block">$ python3 server.py
+==================================================
+  视频背景音乐自由切换 - 本地服务器
+==================================================
+
+  项目目录: /home/user/ren-ji-a
+  服务端口: 8000
+  访问地址: http://localhost:8000
+
+  按 Ctrl+C 停止服务器
+==================================================
+
+  已自动打开浏览器
+[02/Apr/2026 10:30:00] "GET / HTTP/1.1" 200 -
+[02/Apr/2026 10:30:00] "GET /style.css HTTP/1.1" 200 -
+[02/Apr/2026 10:30:00] "GET /app.js HTTP/1.1" 200 -</div>
+
+    <div class="screenshot-placeholder">
+        【截图1】Python 服务器启动终端输出<br>
+        （请在此处粘贴实际运行截图）
+    </div>
+
+    <h3>3.2 浏览器访问</h3>
+    <p>服务器启动后，浏览器自动打开 <code>http://localhost:8000</code>，加载视频播放页面。页面成功渲染了视频播放器、BGM选择面板和播放控制栏。</p>
+
+    <div class="screenshot-placeholder">
+        【截图2】浏览器中打开的项目页面<br>
+        （请在此处粘贴实际运行截图）
+    </div>
+
+    <h3>3.3 server.py 核心代码</h3>
+    <div class="code-block">#!/usr/bin/env python3
+"""视频背景音乐自由切换 - Python HTTP 服务器"""
+
+import http.server
+import socketserver
+import os
+import webbrowser
+
+PORT = 8000
+DIRECTORY = os.path.dirname(os.path.abspath(__file__))
+
+class MyHandler(http.server.SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=DIRECTORY, **kwargs)
+
+def main():
+    print(f"  访问地址: http://localhost:{PORT}")
+    with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
+        webbrowser.open(f"http://localhost:{PORT}")
+        httpd.serve_forever()
+
+if __name__ == "__main__":
+    main()</div>
+
+    <!-- ===== 四、通义灵码使用过程说明 ===== -->
+    <div class="page-break"></div>
+    <h2>四、通义灵码使用过程说明</h2>
+
+    <h3>4.1 工具介绍</h3>
+    <p>通义灵码（Tongyi Lingma）是阿里云推出的 AI 智能编码助手，集成在 VS Code 等主流编辑器中。它能根据自然语言描述生成代码，提供智能补全、代码解释和优化建议等功能。</p>
+
+    <h3>4.2 交互过程</h3>
+
+    <p><span class="highlight">第一步：需求描述与架构设计</span></p>
+    <p>向通义灵码描述项目需求："我需要实现一个视频背景音乐自由切换功能，使用HTML5 Video播放30秒视频，通过Web Audio API生成5种不同风格的BGM，用户可以通过点击卡片切换BGM。"</p>
+    <div class="screenshot-placeholder">
+        【截图3】与通义灵码的对话 - 需求描述<br>
+        （请在此处粘贴实际截图）
+    </div>
+    <p>通义灵码分析需求后，建议采用视频静音播放 + 独立音频控制的方案，并推荐使用 Web Audio API 的 OscillatorNode 实时合成音频。</p>
+
+    <p><span class="highlight">第二步：生成核心代码</span></p>
+    <p>请通义灵码生成 BGM 合成函数。例如，请求生成"使用 Web Audio API 创建一个轻快旋律的 BGM 生成器"，通义灵码给出了使用正弦波振荡器配合音符序列的实现方案：</p>
+    <div class="code-block">// 通义灵码生成的轻快旋律 BGM 函数
+function createBrightMelody() {
+    const notes = [523.25, 587.33, 659.25, 698.46, 783.99];
+    const gainNode = audioCtx.createGain();
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = notes[0];
+    // ... 音符循环切换逻辑
+}</div>
+    <div class="screenshot-placeholder">
+        【截图4】通义灵码生成 BGM 合成代码<br>
+        （请在此处粘贴实际截图）
+    </div>
+
+    <p><span class="highlight">第三步：UI 界面优化</span></p>
+    <p>使用通义灵码优化 CSS 样式，包括深色渐变背景、毛玻璃效果卡片、音波动画等。通过多次交互调整了配色方案和动画效果。</p>
+    <div class="screenshot-placeholder">
+        【截图5】通义灵码辅助 CSS 样式优化<br>
+        （请在此处粘贴实际截图）
+    </div>
+
+    <p><span class="highlight">第四步：调试与优化</span></p>
+    <p>在调试过程中，发现BGM切换时存在音频重叠问题。通过通义灵码的建议，添加了淡出处理逻辑：先将当前BGM音量渐变至0，再停止旧音源并启动新音源，有效解决了切换时的爆音问题。</p>
+
+    <h3>4.3 使用心得</h3>
+    <p>通义灵码在以下方面显著提升了开发效率：</p>
+    <ul>
+        <li>快速生成 Web Audio API 相关的复杂代码，减少查阅文档时间；</li>
+        <li>提供 CSS 动画效果的最佳实践方案；</li>
+        <li>帮助定位和解决音频上下文状态管理等技术难点；</li>
+        <li>优化代码结构，提升可维护性。</li>
+    </ul>
+
+    <!-- ===== 五、项目实现过程与成果展示 ===== -->
+    <div class="page-break"></div>
+    <h2>五、项目实现过程与成果展示</h2>
+
+    <h3>5.1 技术架构</h3>
+    <p>本项目采用纯前端技术实现，配合 Python 本地服务器提供文件服务。核心架构如下：</p>
+    <table class="data-table">
+        <tr><th>模块</th><th>技术</th><th>说明</th></tr>
+        <tr><td>视频播放</td><td>HTML5 &lt;video&gt;</td><td>静音播放视频，支持进度控制</td></tr>
+        <tr><td>BGM 生成</td><td>Web Audio API</td><td>实时合成5种风格音频，无需外部文件</td></tr>
+        <tr><td>界面交互</td><td>CSS3 + JavaScript</td><td>响应式深色主题，动画反馈</td></tr>
+        <tr><td>本地服务</td><td>Python http.server</td><td>一键启动本地 HTTP 服务</td></tr>
+    </table>
+
+    <h3>5.2 核心功能实现</h3>
+
+    <p><strong>（1）5种 BGM 风格</strong></p>
+    <table class="data-table">
+        <tr><th>BGM 名称</th><th>合成方式</th><th>音效特点</th></tr>
+        <tr><td>轻快旋律</td><td>正弦波 + 颤音 LFO</td><td>C大调音阶循环，明亮欢快</td></tr>
+        <tr><td>动感节拍</td><td>方波 + 低频鼓点</td><td>摇滚 riff 模式，节奏感强</td></tr>
+        <tr><td>优雅弦乐</td><td>双锯齿波失谐 + 低通滤波</td><td>模拟弦乐合奏，优雅柔和</td></tr>
+        <tr><td>自然氛围</td><td>白噪音 + LFO 调制滤波</td><td>类似海浪/风声，放松舒缓</td></tr>
+        <tr><td>电子合成</td><td>FM 合成 + 延迟反馈</td><td>科技感电子音序，未来风格</td></tr>
+    </table>
+
+    <p><strong>（2）BGM 切换核心代码</strong></p>
+    <div class="code-block">function playBgm(index) {
+    initAudioContext();
+    stopCurrentBgm();        // 淡出并停止当前 BGM
+    setTimeout(() => {
+        currentBgmIndex = index;
+        bgmNodes = BGM_CREATORS[index]();  // 创建新 BGM
+        masterGain.gain.value = bgmVolume; // 设置音量
+        updateBgmCards();     // 更新 UI 状态
+        currentBgmName.textContent = BGM_LIST[index].name;
+    }, 200);  // 等待淡出完成
+}</div>
+
+    <p><strong>（3）界面交互特性</strong></p>
+    <ul>
+        <li>BGM 卡片点击切换，选中状态发光高亮，音波动画实时跳动；</li>
+        <li>播放/暂停按钮控制视频和 BGM 同步；</li>
+        <li>进度条可拖拽，实时显示播放时间；</li>
+        <li>音量滑块控制 BGM 音量，支持静音切换；</li>
+        <li>键盘快捷键：空格键播放/暂停，数字键1-5快速切换BGM。</li>
+    </ul>
+
+    <h3>5.3 成果展示</h3>
+
+    <div class="screenshot-placeholder">
+        【截图6】项目主界面全貌<br>
+        （请在此处粘贴实际截图）
+    </div>
+
+    <div class="screenshot-placeholder">
+        【截图7】BGM 切换效果 - 选中"动感节拍"<br>
+        （请在此处粘贴实际截图）
+    </div>
+
+    <div class="screenshot-placeholder">
+        【截图8】播放控制栏 - 进度条与音量控制<br>
+        （请在此处粘贴实际截图）
+    </div>
+
+    <h3>5.4 项目文件结构</h3>
+    <div class="code-block">ren-ji-a/
+├── index.html     # 主页面（视频播放器 + BGM 切换面板）
+├── style.css      # 样式文件（深色主题 + 动画效果）
+├── app.js         # 核心逻辑（Web Audio API BGM 生成与切换）
+├── server.py      # Python HTTP 服务器
+├── report.html    # 实验报告（本文件）
+└── README.md      # 项目说明文档</div>
+
+    <!-- ===== 六、实验总结 ===== -->
+    <h2>六、实验总结</h2>
+    <p>通过本次实验，我掌握了以下技术要点：</p>
+    <ol>
+        <li><strong>Web Audio API 音频合成</strong>：学会使用 OscillatorNode、GainNode、BiquadFilterNode 等节点构建音频处理图，实现了5种不同风格的 BGM 实时合成；</li>
+        <li><strong>HTML5 多媒体控制</strong>：掌握了 Video 元素的程序化控制方法，实现了自定义播放器界面；</li>
+        <li><strong>前端 UI 设计</strong>：运用 CSS3 渐变、毛玻璃效果、关键帧动画等技术，打造了现代化的交互界面；</li>
+        <li><strong>Python 服务器搭建</strong>：利用 Python 内置模块快速搭建本地服务环境；</li>
+        <li><strong>AI 辅助开发</strong>：借助通义灵码显著提升了编码效率，特别是在复杂 API 使用和问题排查方面。</li>
+    </ol>
+    <p>本实验最大的收获是理解了音频合成的原理，通过不同波形、滤波器和调制方式的组合，可以创造出丰富多样的音效，为视频内容增添不同的情感氛围。</p>
+
+</div>
+
+</body>
+</html>

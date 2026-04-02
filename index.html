@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频背景音乐自由切换</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 顶部标题栏 -->
+        <header class="header">
+            <h1 class="title">视频背景音乐自由切换</h1>
+            <p class="subtitle">选择不同风格的背景音乐，为视频增添氛围</p>
+        </header>
+
+        <!-- 视频播放区域 -->
+        <div class="video-section">
+            <div class="video-wrapper">
+                <video id="videoPlayer" muted playsinline>
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                    您的浏览器不支持视频播放
+                </video>
+                <div class="video-overlay" id="videoOverlay">
+                    <button class="play-big-btn" id="bigPlayBtn">&#9654;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- BGM 选择面板 -->
+        <div class="bgm-section">
+            <h2 class="section-title">选择背景音乐</h2>
+            <div class="bgm-grid" id="bgmGrid">
+                <div class="bgm-card" data-bgm="0">
+                    <div class="bgm-icon">&#127925;</div>
+                    <div class="bgm-info">
+                        <span class="bgm-name">轻快旋律</span>
+                        <span class="bgm-tag">明亮欢快</span>
+                    </div>
+                    <div class="bgm-bars">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="bgm-card" data-bgm="1">
+                    <div class="bgm-icon">&#127928;</div>
+                    <div class="bgm-info">
+                        <span class="bgm-name">动感节拍</span>
+                        <span class="bgm-tag">摇滚动感</span>
+                    </div>
+                    <div class="bgm-bars">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="bgm-card" data-bgm="2">
+                    <div class="bgm-icon">&#127931;</div>
+                    <div class="bgm-info">
+                        <span class="bgm-name">优雅弦乐</span>
+                        <span class="bgm-tag">古典优雅</span>
+                    </div>
+                    <div class="bgm-bars">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="bgm-card" data-bgm="3">
+                    <div class="bgm-icon">&#127754;</div>
+                    <div class="bgm-info">
+                        <span class="bgm-name">自然氛围</span>
+                        <span class="bgm-tag">放松舒缓</span>
+                    </div>
+                    <div class="bgm-bars">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="bgm-card" data-bgm="4">
+                    <div class="bgm-icon">&#127929;</div>
+                    <div class="bgm-info">
+                        <span class="bgm-name">电子合成</span>
+                        <span class="bgm-tag">科技未来</span>
+                    </div>
+                    <div class="bgm-bars">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 播放控制栏 -->
+        <div class="controls-bar">
+            <button class="ctrl-btn" id="playPauseBtn" title="播放/暂停">
+                <span id="playIcon">&#9654;</span>
+            </button>
+            <div class="progress-section">
+                <span class="time-display" id="currentTime">0:00</span>
+                <div class="progress-bar-wrapper" id="progressBarWrapper">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <div class="progress-thumb" id="progressThumb"></div>
+                </div>
+                <span class="time-display" id="totalTime">0:00</span>
+            </div>
+            <div class="volume-section">
+                <button class="ctrl-btn volume-btn" id="volumeBtn" title="静音/恢复">
+                    <span id="volumeIcon">&#128266;</span>
+                </button>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
+            </div>
+            <div class="current-bgm" id="currentBgmDisplay">
+                <span class="bgm-label">当前BGM：</span>
+                <span class="bgm-current-name" id="currentBgmName">未选择</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
